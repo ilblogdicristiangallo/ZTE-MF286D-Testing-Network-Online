@@ -20,4 +20,6 @@ The script automatically monitors and resets all SIMs with the WWAN interface (n
 
 **Via USB storage**: Save the script on a USB drive connected to the router and call it from startup scripts
 
+**Important**: After uploading the script via PuTTY, you need to insert the full path in rc.local to execute it at boot. For example: `/root/NetWatch-WanNetwork.sh &` or `/etc/init.d/NetWatch-WanNetwork.sh start &`
+
 The most reliable methods are via LuCI Web Interface and via PuTTY/SSH in /etc/init.d/, as they integrate properly with OpenWrt's init system.
