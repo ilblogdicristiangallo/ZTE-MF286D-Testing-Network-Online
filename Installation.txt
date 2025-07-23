@@ -1,0 +1,44 @@
+Install the script using PuTTY (SSH)
+1. Connect to the router via SSH
+Download and open PuTTY
+
+Enter your router’s IP address (usually 192.168.1.1)
+
+Click Open
+
+Log in with:
+
+Username: root
+Password: (your OpenWrt admin password)
+
+Download and install the script
+In the PuTTY terminal, run the following commands:
+cd /usr/bin
+wget https://raw.githubusercontent.com/ilblogdicristiangallo/ZTE-MF286D-Testing-Network-Online/main/NetWatchWanNetwork.sh
+chmod +x /usr/bin/NetWatchWanNetwork.sh
+
+This downloads the script to /usr/bin/ and makes it executable.
+
+Test the script manually: /usr/bin/NetWatchWanNetwork.sh
+
+Enable automatic execution at startup using LuCI
+
+Method: using rc.local via LuCI (web interface)
+1. Access the LuCI web interface
+Open your browser and go to http://192.168.1.1. Log in with your OpenWrt credentials.
+
+2. Navigate to System → Startup
+3. Scroll down to the "Local Startup" section
+This section allows you to edit the /etc/rc.local file, which runs automatically during system boot.
+
+4. Add the following line before the exit 0 line:
+
+/usr/bin/NetWatchWanNetwork.sh &
+
+ Example of the final result:
+#!/bin/sh -e
+
+/usr/bin/NetWatchWanNetwork.sh &
+
+exit 0
+
