@@ -42,3 +42,17 @@ This section allows you to edit the /etc/rc.local file, which runs automatically
 
 exit 0
 
+Click Save & Apply at the bottom of the page
+
+Reboot the router
+You can reboot:
+
+From LuCI: go to System → Reboot → Perform Reboot
+
+Or from SSH with the command:
+reboot
+
+Optional: Verify the script is running
+You can check the system log to see if the script executed after reboot:
+
+logread | grep NetWatch
