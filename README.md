@@ -6,11 +6,14 @@ Basically, the script stops and restarts the physical WAN interface to prevent s
 
 Remember:
 
-Very Mobile and WindTre SIMs with the APN internet.it use NAT and their IP address changes every 4 hours.
+Very Mobile and WindTre SIMs with the APN internet.it use NAT, and their IP address changes every 4 hours.
 
-“Denat” SIMs with the APN myinternet.wind change their IP every 24 hours.
+"Denat" SIMs with the APN myinternet.wind change their IP every 24 hours.
 
-This script is designed to prevent the connection from falling back to 3G in some areas when the 4G network (using qmi or modem manager on OpenWrt) disconnects due to an IP change — something I personally experienced.
+Important note:
+The connection will only drop to 3G if using the qmi package for managing the modem. With modemmanager, the connection never falls to 3G, as you can specifically choose to aggregate only the 4G network. Therefore, if you experience a drop to 3G, you are likely using the qmi package.
+
+This script is designed to prevent the connection from falling back to 3G in some areas when the 4G network (using qmi or modemmanager on OpenWrt) disconnects due to an IP change — something I personally experienced.
 
 You can use this script to try to keep your Very Mobile SIM connected on 4G instead of dropping to 3G.
 
