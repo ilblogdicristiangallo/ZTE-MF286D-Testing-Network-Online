@@ -1,25 +1,28 @@
-The script is compatible with all 4G mobile SIM cards with OpenWrt installed, tested on ZTE MF286D.
+The script works with all 4G SIM cards running OpenWrt and has been tested on the ZTE MF286D.
 
-The script automatically monitors and resets all SIMs with the WWAN interface (named this way because virtual interfaces on OpenWrt follow this naming convention), but actually the script stops the physical WAN interface to try to avoid Very Mobile and WindTre SIMs dropping to 3G, as happened in my case. It can always be used to try to keep the Very Mobile SIM in 4G instead of 3G. The script timings can be extended according to the SIM you have, just modify the sleep `sleep 10800 # 3 hours` in the written code.
+It automatically monitors the internet connection on all SIMs via the WWAN interface (this is the name OpenWrt uses for mobile network interfaces).
 
-**The script can be loaded using several methods:**
+Basically, the script stops and restarts the physical WAN interface to prevent some SIMs — like Very Mobile and WindTre — from dropping from 4G to 3G, which happened in my case.
 
-**Via LuCI Web Interface**: Go to System → Startup → rc.local and add the script path to execute at boot
+Remember:
 
-**Via PuTTY/SSH in /etc/init.d/**: 
-- Connect via PuTTY to your router
-- Create the script file: `vi /etc/init.d/NetWatch-WanNetwork.sh`
-- Make it executable: `chmod +x /etc/init.d/NetWatch-WanNetwork.sh`
-- Enable at startup: `/etc/init.d/NetWatch-WanNetwork.sh enable`
+Very Mobile and WindTre SIMs with the APN internet.it use NAT and their IP address changes every 4 hours.
 
-**Via PuTTY/SSH in root directory**:
-- Connect via PuTTY to your router
-- Create the script file in any directory: `vi /root/NetWatch-WanNetwork.sh`
-- Make it executable: `chmod +x /root/NetWatch-WanNetwork.sh`
-- Add to crontab or rc.local to run at boot
+“Denat” SIMs with the APN myinternet.wind change their IP every 24 hours.
 
-**Via USB storage**: Save the script on a USB drive connected to the router and call it from startup scripts
+This script is designed to prevent the connection from falling back to 3G in some areas when the 4G network (using qmi or modem manager on OpenWrt) disconnects due to an IP change — something I personally experienced.
 
-**Important**: After uploading the script via PuTTY, you need to insert the full path in rc.local to execute it at boot. For example: `/root/NetWatch-WanNetwork.sh &` or `/etc/init.d/NetWatch-WanNetwork.sh start &`
+You can use this script to try to keep your Very Mobile SIM connected on 4G instead of dropping to 3G.
 
-The most reliable methods are via LuCI Web Interface and via PuTTY/SSH in /etc/init.d/, as they integrate properly with OpenWrt's init system.
+The time between each restart in the script is set by the sleep 10800 command, which equals 3 hours. You can also set it to 3 hours and 40 or 50 minutes — just modify the value in the code. The script is open and customizable for everyone.
+
+What the script does (simple explanation):
+Continuously checks if the internet connection is working by sending ping requests to a server.
+
+If the connection fails, it restarts the WAN interface (turns the data connection off and on).
+
+If restarting the WAN interface doesn’t restore the connection, it reboots the whole router.
+
+Every 3 hours by default, it automatically resets the WAN interface to keep the connection stable and ideally on 4G.
+
+You can change the reset interval by editing the sleep value inside the script.
