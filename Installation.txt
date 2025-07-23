@@ -52,7 +52,6 @@ From LuCI: go to System → Reboot → Perform Reboot
 Or from SSH with the command:
 reboot
 
-Optional: Verify the script is running
-You can check the system log to see if the script executed after reboot:
+To view the script logs via PuTTY (SSH), use this command:
+logread | grep WWAN-RESET
 
-logread | grep NetWatch
